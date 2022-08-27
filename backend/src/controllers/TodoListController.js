@@ -5,13 +5,13 @@ module.exports = {
     
     async read(request, response){
         const todolistArray = await TodoList.find()
-        console.log(todolistArray)
-
         return response.json(todolistArray)
     },
 
     async create(request, response){
-        const {description, duedate, done, hide} = request.body
+        const {description, duedate} = request.body
+        const done = false, hide = false
+
         if(!description || !duedate){
             return response.status(400).json({
                 error: "Necessario preencher os campos"
@@ -40,25 +40,4 @@ module.exports = {
 
     },
 
-    async update(request, response){
-        let {description, duedate, done, hide} = request.body
-        const {id} = request.params
-        let todolistExist = await TodoList.findOne({_id: id})
-        
-        if(!todolistExist){
-            return response.status(401).json({error: "Registro não encontrado"})
-        }
-        todolistExist = json(todolistExist)
-        description = (description)? description : todolistExist.description
-        duedate = (duedate)? duedate : todolistExist.duedate
-        
-        const todolistUpdated = await TodoList.updateOne({_id : id}, {
-            description,
-            duedate,
-            done,
-            hide
-        })
-
-        return response.json(todolistUpdated)
-    }
 }
