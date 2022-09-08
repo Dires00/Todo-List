@@ -1,35 +1,26 @@
 import React from 'react'
 
+import { useState } from 'react'
+
 import './global.css'
+import './App.css'
+import './main.css'
+
+import List from './Components/List/List'
+import Popup from './Components/Popup/Popup'
 
 function App() {
+  const [buttonPopup,  setButtonPopup] = useState(false)
   return (
     <div id="app">
-      <aside>
-        <strong>Todo List</strong>
-        <form>
-          <div className='input-block'>
-            <label htmlFor='description'>Description</label>
-            <textarea></textarea>
-          </div>
-
-          <div className='input-block'>
-            <label htmlFor='duedate'>Due Date</label>
-            <input></input>
-          </div>
-
-          <button type='submit'>Save</button>
-        </form>
-      </aside>
-
       <main>
-        <table id = "todolistTable">
-          <tr>
-            <th>Description</th>
-            <th>Due Date</th>
-            <th>Done</th>
-          </tr>
-        </table>
+        <div className='new-task'>
+          <button className='new-task' onClick={() => setButtonPopup(true)}>Adicionar tarefa</button>
+        </div>
+        <ul>
+          <List/>
+        </ul>
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}/>
       </main>
     </div>
   );

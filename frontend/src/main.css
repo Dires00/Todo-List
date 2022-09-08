@@ -1,0 +1,86 @@
+main {
+    flex: 1;
+}
+
+
+main div.new-task{
+    text-align: center;
+}
+
+main div.new-task button.new-task{
+    background-color: rgb(137, 216, 234);
+    border-color: rgb(137, 216, 234);
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    border-radius: 10px;
+    width: 15%;
+    height: 30px;
+    margin-bottom: 7px;
+}
+
+main div.new-task button.new-task:hover{
+    background-color: rgb(48, 156, 180);
+    border-color: rgb(48, 156, 180);
+    color: #FFF;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+main ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    list-style: none;
+}
+
+li.todolist-infos div{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+li.todolist-infos{
+    background-color: #FFF;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px 20px 10px 20px;
+}
+
+li.todolist-infos strong{
+    display: block;
+    font-size: 16px;
+    color: #333;
+}
+
+li.todolist-infos div div{
+    color: rgb(137, 216, 234);
+    cursor: pointer;
+}
+
+li.todolist-infos div div:hover{
+    color: rgb(48, 156, 180);
+    
+}
+
+li.todolist-infos textarea{
+    padding: 7px;
+    margin-top: 7px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: 130px;
+    font-size: 14px;
+    color: #666;
+    border: 0;
+    background: #fff;
+    resize: none;
+}
+
+li.todolist-infos span{
+    color: #C4C4C4;
+    cursor: pointer;
+}
+
+li.todolist-infos span:hover{
+    color: rgb(48, 156, 180);
+    transition: 0.2s;
+}
