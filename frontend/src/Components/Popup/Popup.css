@@ -6,34 +6,99 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.2);
 
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
 }
 
 .popup-inner{
+    background-color: #FFF;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px 20px 10px 20px;
     position: relative;
     padding: 32px;
     width: 100%;
     max-width: 640px;
-    background-color: #FFF;
+    display: inline-block;
 }
 
 .popup-inner .close-btn{
-    background-color: rgb(137, 216, 234);
-    border-color: rgb(137, 216, 234);
-    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
-    font-size: 14px;
-    border-radius: 10px;
-    width: 15%;
-    height: 30px;
-    margin-bottom: 7px;
+    position: absolute;
+    right: 31px;
+    color: rgb(137, 216, 234);
+    cursor: pointer;
 }
 
 .popup-inner .close-btn:hover{
-    background-color: rgb(48, 156, 180);
-    border-color: rgb(48, 156, 180);
-    color: #FFF;
-    cursor: pointer;
+    color: rgb(48, 156, 180);
     transition: 0.2s;
+}
+
+.popup-inner textarea{
+    padding: 7px;
+    margin-top: 7px;
+    margin-bottom: 5px;
+    border-color: #333;
+    width: 100%;
+    height: 130px;
+    font-size: 14px;
+    color: #666;
+    border: 0;
+    background: #fff;
+    resize: none;
+}
+
+.popup-inner strong{
+    position: absolute;
+    left: 31px;
+    margin: 0 0 0 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.popup-inner form{
+    margin-top: 30px;
+}
+
+.popup-inner form .input-block label {
+    color: #ACACAC;
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+}
+
+.popup-inner form .input-block input {
+    width: 100%;
+    height: 32px;
+    font-size: 14px;
+    color: #666;
+    border: 0;
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 7px;
+}
+
+.popup-inner form .input-block textarea{
+    margin-top: 7px;
+    margin-bottom: 7px;
+    height: 200px;
+    width: 100%;
+    font-size: 14px;
+    color: #666;
+    border: 0;
+    border-bottom: 1px solid #EEE;
+}
+
+.popup-inner form .save-button{
+    width: 100%;
+    border: 0;
+    margin-top: 30px;
+    background: rgb(137, 216, 234);
+    border-radius: 10px;
+    color: #FFF;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    
 }

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { AiFillCloseCircle } from 'react-icons/ai' 
+
 import './Popup.css'
 function Popup(props) {
     return (props.trigger) ? (
@@ -7,7 +9,7 @@ function Popup(props) {
             <div className="popup-inner">
                 <strong>Nova Tarefa</strong>
                 <div className="close-btn" onClick={() => props.setTrigger(false)}>
-                    x
+                    <AiFillCloseCircle/>
                 </div>
                 <form>
                     <div className='input-block'>
@@ -20,7 +22,7 @@ function Popup(props) {
                         <input></input>
                     </div>
 
-                    <button type='submit'>Save</button>
+                    <button className="save-button">Save</button>
                 </form>
             </div>
         </div>
