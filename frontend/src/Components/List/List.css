@@ -1,34 +1,34 @@
-li.todolist-infos div{
+.todolist-infos div{
     display: flex;
     justify-content: space-between;
     
 }
 
-li.todolist-infos{
+.todolist-infos{
     background-color: #FFF;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 20px 20px 10px 20px;
 }
 
-li.todolist-infos strong{
+.todolist-infos strong{
     display: block;
     font-size: 16px;
     color: #333;
 }
 
-li.todolist-infos div .icons div{
+.todolist-infos div .icons div{
     color: rgb(137, 216, 234);
     cursor: pointer;
-    padding: 0 0 0 0;
+    font-size: 20px;
 }
 
-li.todolist-infos div .icons div:hover{
+.todolist-infos div .icons div:hover{
     color: rgb(48, 156, 180);
     
 }
 
-li.todolist-infos textarea{
+.todolist-infos textarea{
     padding: 7px;
     margin-top: 7px;
     margin-bottom: 5px;
@@ -41,12 +41,22 @@ li.todolist-infos textarea{
     resize: none;
 }
 
-li.todolist-infos span{
-    color: #C4C4C4;
-    cursor: pointer;
+.todolist-infos .done-text{
+    font-size: 14px;
+    color: #666;
+    width: 100%;
 }
 
-li.todolist-infos span:hover{
-    color: rgb(48, 156, 180);
-    transition: 0.2s;
+.todolist-infos .done-icon{
+    padding-right: 5px;
+    font-size: 16px;
 }
+
+.todolist-infos .done-icon .icon-check{
+    color: green
+}
+
+.todolist-infos .done-icon .icon-cross{
+    color: red;
+}
+

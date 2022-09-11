@@ -1,89 +1,32 @@
 import React from "react";
 
-import { BiTrash } from 'react-icons/bi'
+import { BiTrash, BiCheckDouble } from 'react-icons/bi'
 import { BsPencilSquare } from 'react-icons/bs'
+import { VscError } from 'react-icons/vsc'
 
 import './List.css'
 
-function List() {
+function List({ data }) {
+
     return (
         <>
-            <li className='todolist-infos'>
-                <div>
-                    <strong>Fazer Compras</strong>
-                    <div className="icons">
-                        <div>
-                            <BiTrash />
-                        </div>
-                        <div>
-                            <BsPencilSquare />
-                        </div>
-                    </div>
-                </div>
-                <textarea>
-                    Alguma coisa escrita
-                </textarea>
-                <span>
-                    !
-                </span>
-            </li>
-            <li className='todolist-infos'>
-                <div>
-                    <strong>Fazer Compras</strong>
+            <div>
+                <strong>{data.duedate}</strong>
+                <div className="icons">
                     <div>
-                        x
+                        <BiTrash />
                     </div>
-                </div>
-                <textarea>
-                    Alguma coisa escrita
-                </textarea>
-                <span>
-                    !
-                </span>
-            </li>
-            <li className='todolist-infos'>
-                <div>
-                    <strong>Fazer Compras</strong>
                     <div>
-                        x
+                        <BsPencilSquare />
                     </div>
                 </div>
-                <textarea>
-                    Alguma coisa escrita
-                </textarea>
-                <span>
-                    !
-                </span>
-            </li>
-            <li className='todolist-infos'>
-                <div>
-                    <strong>Fazer Compras</strong>
-                    <div>
-                        x
-                    </div>
-                </div>
-                <textarea>
-                    Alguma coisa escrita
-                </textarea>
-                <span>
-                    !
-                </span>
-            </li>
-            <li className='todolist-infos'>
-                <div>
-                    <strong>Fazer Compras</strong>
-                    <div>
-                        x
-                    </div>
-                </div>
-                <textarea>
-                    Alguma coisa escrita
-                </textarea>
-                <span>
-                    !
-                </span>
-            </li>
+            </div>
+            <textarea defaultValue={data.description}></textarea>
+            <span className="done-icon">{data.done ? <BiCheckDouble className="icon-check"/> : <VscError className="icon-cross"/>}</span>
+            <span className="done-text">{data.done ? "Finalizada" : "Aberta"}</span>
+
         </>
+
     )
 }
 
