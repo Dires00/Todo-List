@@ -8,6 +8,7 @@
     background-color: #FFF;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    margin-top: 20px;
     padding: 20px 20px 10px 20px;
 }
 
@@ -56,7 +57,25 @@
     color: green
 }
 
+.todolist-infos .done-icon .icon-check:hover{
+    color: #fff;
+    background-color: green;
+    border-radius: 100%;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
 .todolist-infos .done-icon .icon-cross{
     color: red;
 }
+
+.todolist-infos .done-icon .icon-cross:hover{
+    color: #fff;
+    background-color: red;
+    border-radius: 100%;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+
 

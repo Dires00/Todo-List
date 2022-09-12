@@ -3,21 +3,27 @@ import React from "react";
 import { BiTrash, BiCheckDouble } from 'react-icons/bi'
 import { BsPencilSquare } from 'react-icons/bs'
 import { VscError } from 'react-icons/vsc'
+import { MdSdStorage } from 'react-icons/md'
 
-import './List.css'
+import './styles.css'
 
-function List({ data }) {
-
+function List({ data, duedate='' }) {
+    const date = duedate.split("T")[0]
+    const dateSplited = date.split("-") 
+    const localDate = dateSplited[2]+ "/"+ dateSplited[1] + "/"+ dateSplited[0]
     return (
         <>
             <div>
-                <strong>{data.duedate}</strong>
+                <strong>{localDate}</strong>
                 <div className="icons">
                     <div>
                         <BiTrash />
                     </div>
                     <div>
                         <BsPencilSquare />
+                    </div>
+                    <div>
+                        <MdSdStorage/>
                     </div>
                 </div>
             </div>
