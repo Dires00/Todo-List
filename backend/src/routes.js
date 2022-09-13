@@ -21,5 +21,6 @@ routes.post('/done/:id', DoneController.update)
 
 // Rota Content
 routes.post('/content/:id', ContentController.update)
+routes.get('/content', ContentController.read)
 
 module.exports = routes

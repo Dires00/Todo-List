@@ -22,5 +22,16 @@ module.exports = {
         await item.save()
         
         return response.json(item)
+    },
+
+    async read(request, response){
+        const description = request.query
+        const itens = await TodoList.find(description)
+
+        if(!itens){
+            return response.status(401).json({error: "Registro não encontrado"})
+        }
+
+        return response.json(itens)
     }
 }

@@ -7,6 +7,10 @@ module.exports = {
 
         const itens = await TodoList.find(done)
 
+        if(!itens){
+            return response.status(401).json({error: "Registro não encontrado"})
+        }
+
         return response.json(itens)
     },
 

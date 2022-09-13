@@ -43,7 +43,8 @@
 }
 
 .popup-inner .btn:hover{
-    color: rgb(48, 156, 180);
+    background-color: rgb(48, 156, 180);
+    color: #FFF;
     transition: 0.2s;
 }
 

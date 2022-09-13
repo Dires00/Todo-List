@@ -45,6 +45,14 @@ main .search{
     width: 100%; 
 }
 
+main .switch{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
 main .search .search-input{
     font-size: 16px;
     border: 0;
