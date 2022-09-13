@@ -1,36 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { BiTrash, BiCheckDouble } from 'react-icons/bi'
-import { BsPencilSquare } from 'react-icons/bs'
 import { VscError } from 'react-icons/vsc'
 import { MdSdStorage } from 'react-icons/md'
 
+import api from "../../services/api";
+
 import './styles.css'
 
-function List({ data, duedate='' }) {
-    const date = duedate.split("T")[0]
-    const dateSplited = date.split("-") 
-    const localDate = dateSplited[2]+ "/"+ dateSplited[1] + "/"+ dateSplited[0]
+function List({ data, setTrigger, setId}) {
+
+    let date = data.duedate
+    if (typeof date === 'string') {
+        date = date.split('T')[0]
+    }
+
+    const [newDate, setNewDate] = useState('')
+    const [newDescription, setNewDescription] = useState('')
+
+    async function handleSave(e) {
+        if (!data.done) {
+            if (newDate && newDate !== date && newDescription && newDescription !== data.description) {
+                const duedate = new Date(newDate)
+                const isoDate = duedate.toISOString()
+                await api.post(`/content/${data._id}`, {
+                    description: newDescription,
+                    duedate: isoDate
+                })
+
+            }
+
+            else if (newDate && newDate !== date) {
+                console.log('entrei data')
+                const duedate = new Date(newDate)
+                const isoDate = duedate.toISOString()
+                await api.post(`/content/${data._id}`, {
+                    description: data.description,
+                    duedate: isoDate
+                })
+            }
+
+            else if (newDescription && newDescription !== data.description) {
+                await api.post(`/content/${data._id}`, {
+                    description: newDescription,
+                    duedate: data.duedate
+                })
+            }
+        }
+
+
+    }
+
     return (
         <>
             <div>
-                <strong>{localDate}</strong>
+                <input
+                    className="date"
+                    type={"date"}
+                    defaultValue={date}
+                    onChange={e => setNewDate(e.target.value)}
+                    onBlur={e => handleSave(e.target)}
+
+                />
+                
                 <div className="icons">
                     <div>
-                        <BiTrash />
+                        <BiTrash 
+                        onClick={() => 
+                            {setTrigger(true)
+                            setId(data._id)}}
+                        />
                     </div>
                     <div>
-                        <BsPencilSquare />
-                    </div>
-                    <div>
-                        <MdSdStorage/>
+                        <MdSdStorage />
                     </div>
                 </div>
             </div>
-            <textarea defaultValue={data.description}></textarea>
-            <span className="done-icon">{data.done ? <BiCheckDouble className="icon-check"/> : <VscError className="icon-cross"/>}</span>
+            <textarea
+                className="description"
+                defaultValue={data.description}
+                onChange={e => setNewDescription(e.target.value)}
+                onBlur={e => handleSave(e.target)}
+            />
+            <span className="done-icon">{data.done ? <BiCheckDouble className="icon-check" /> : <VscError className="icon-cross" />}</span>
             <span className="done-text">{data.done ? "Finalizada" : "Aberta"}</span>
-
         </>
 
     )

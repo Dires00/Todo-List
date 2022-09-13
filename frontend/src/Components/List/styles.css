@@ -12,10 +12,12 @@
     padding: 20px 20px 10px 20px;
 }
 
-.todolist-infos strong{
+.todolist-infos .date{
     display: block;
-    font-size: 16px;
+    font-weight: bold;
     color: #333;
+    font-size: 14px;
+    border: 0;
 }
 
 .todolist-infos div .icons div{
@@ -29,7 +31,7 @@
     
 }
 
-.todolist-infos textarea{
+.todolist-infos .description{
     padding: 7px;
     margin-top: 7px;
     margin-bottom: 5px;

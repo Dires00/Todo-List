@@ -6,7 +6,7 @@ import './styles.css'
 
 import api from '../../services/api'
 
-function Popup(props) {
+function CreatePopup({setTrigger, trigger, tasks, setTasks}) {
     const [description, setDescription] = useState('')
     const [duedate, setDuedate] = useState('')
 
@@ -19,18 +19,18 @@ function Popup(props) {
             description: description,
             duedate: isoDate
         })
-        props.setTrigger(false)
+        setTrigger(false)
         setDescription('')
         setDuedate('')
-        let data = props.tasks
+        let data = tasks
         data.push(response.data)
-        props.setTasks(data)
+        setTasks(data)
 
     }
 
     useEffect(() => {
         function enableSubmitButton() {
-            if (props.trigger) {
+            if (trigger) {
                 let button = document.getElementById('submit-button')
                 button.style.background = '#89d8ea'
                 if (description && duedate) {
@@ -41,14 +41,14 @@ function Popup(props) {
         }
 
         enableSubmitButton()
-    }, [description, duedate])
+    }, [description, duedate, trigger])
 
-    return (props.trigger) ? (
+    return (trigger) ? (
         <div className="popup">
             <div className="popup-inner">
                 <strong>Nova Tarefa</strong>
                 <div className="close-btn" onClick={() => {
-                    props.setTrigger(false)
+                    setTrigger(false)
                     setDescription('')
                     setDuedate('')
 
@@ -95,4 +95,4 @@ function Popup(props) {
 
 }
 
-export default Popup
+export default CreatePopup
