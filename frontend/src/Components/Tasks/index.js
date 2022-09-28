@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { BiTrash, BiCheckDouble } from 'react-icons/bi'
-import { VscError } from 'react-icons/vsc'
+import { BiTrash } from 'react-icons/bi'
 import { MdSdStorage } from 'react-icons/md'
 
 
 import api from "../../services/api";
 
 import './styles.css'
+import Done from "../Done";
 
-function List({ data, setTrigger, setId }) {
+function Tasks({ data, setTrigger, setId, getAllTasks}) {
     const [newData, setNewData] = useState(data)
-    let date = newData.duedate ? newData.duedate : data.duedate
-    let done
-    if (typeof date === 'string') {
-        date = date.split('T')[0]
-    }
-
+    const [date, setDate] = useState(newData.duedate ? newData.duedate.split('T')[0] : data.duedate.split('T')[0])
+    const [description, setDescription] = useState(newData.description ? newData.description : data.description)
+    const [done, setDone] = useState(newData.description ? newData.done : data.done)
     const [newDate, setNewDate] = useState('')
     const [newDescription, setNewDescription] = useState('')
+
+    useEffect(() => {
+        setNewData(data)
+        setDate(newData.duedate ? newData.duedate.split('T')[0] : data.duedate.split('T')[0])
+        setDescription(newData.description ? newData.description : data.description)
+        setDone(newData.description ? newData.done : data.done)
+    }, [data, newData])
 
     async function handleSave(e) {
         if (!data.done) {
@@ -58,6 +62,7 @@ function List({ data, setTrigger, setId }) {
             const response = await api.post(`/done/${id}`)
             if (response) {
                 setNewData(response.data)
+                getAllTasks()
             }
         }
     }
@@ -67,18 +72,18 @@ function List({ data, setTrigger, setId }) {
             const response = await api.post(`/hide/${id}`)
             if (response) {
                 setNewData(response.data)
-                window.location.reload(true)
-
+                getAllTasks()
             }
         }
     }
+
     return (
         <>
             <div>
                 <input
                     className="date"
                     type={"date"}
-                    defaultValue={date}
+                    value={date}
                     onChange={e => setNewDate(e.target.value)}
                     onBlur={e => handleSave(e.target)}
 
@@ -96,11 +101,11 @@ function List({ data, setTrigger, setId }) {
                     <div>
                         <MdSdStorage
                             onClick={() => {
-                                done = newData.description ? newData.done : data.done
                                 if (done) {
                                     handleHide(newData._id ? newData._id : data._id)
+                                } else {
+                                    window.alert('A tarefa deve estar finalizada!')
                                 }
-                                window.alert('A tarefa deve estar finalizada!')
                             }}
                         />
                     </div>
@@ -108,20 +113,19 @@ function List({ data, setTrigger, setId }) {
             </div>
             <textarea
                 className="description"
-                defaultValue={newData.description ? newData.description : data.description}
+                value={description}
                 onChange={e => setNewDescription(e.target.value)}
                 onBlur={e => handleSave(e.target)}
             />
-            {done = newData.description ? newData.done : data.done}
-            <span className="done-icon"
-                onClick={() => { handleDone(newData._id ? newData._id : data._id) }}
-
-            >{done ? <BiCheckDouble className="icon-check" /> : <VscError className="icon-cross" />}</span>
-            <span className="done-text">{done ? "Finalizada" : "Aberta"}</span>
+            
+            <Done done={done}
+            handleDone={handleDone}
+            setDone={setDone}
+            id={newData._id ? newData._id : data._id}></Done>
         </>
 
     )
 
 }
 
-export default List
+export default Tasks

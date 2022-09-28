@@ -10,7 +10,7 @@ import './global.css'
 import './App.css'
 import './main.css'
 
-import List from './Components/List'
+import Tasks from './Components/Tasks'
 import CreatePopup from './Components/CreatePopup'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import DeletePopup from './Components/DeletePopup'
@@ -40,17 +40,19 @@ function App() {
     if (id) {
       const response = await api.delete(`/todolist/${id}`)
       if (response) {
-        window.location.reload(true)
+        //window.location.reload(true)
+        setAllTasks(allTasks.filter(task => task._id !== id))
+        setDeleteTrigger(false)
       }
       return response
     }
   }
 
-  async function handleSearch(){
-    if(search){
+  async function handleSearch() {
+    if (search) {
       const response = await api.get(`/content?description=${search}`)
-      if(response){
-        setAllTasks([...response.data])
+      if (response) {
+        setAllTasks(response.data)
         return response
       }
     }
@@ -65,25 +67,33 @@ function App() {
         </div>
 
         <div className='search'>
-          <input className='search-input' type='text' placeholder="Pesquisar..." onChange={(e) => setSearch(e.target.value)}/>
+          <input className='search-input' type='text' placeholder="Pesquisar..." onChange={(e) => setSearch(e.target.value)} />
           <BiSearchAlt2 className='search-icon' onClick={() => {
-            if(search){
+            if (search) {
               handleSearch()
+            } else {
+              getAllTasks()
             }
           }}></BiSearchAlt2>
         </div>
 
         <FormGroup className='switch'>
-          <FormControlLabel control={<Switch onChange={() => setHide(!hide)} />} label="Arquivadas" />
+          <FormControlLabel control={<Switch onChange={() => {
+            setHide(!hide)
+            if(!search)
+              getAllTasks()
+          }}
+          />} label="Arquivadas" />
         </FormGroup>
 
         <ul>
           {allTasks.map(data => data && data.hide === hide ? (
             <li className='todolist-infos' key={index++}>
-              <List
+              <Tasks
                 data={data}
                 setTrigger={setDeleteTrigger}
                 setId={setId}
+                getAllTasks={getAllTasks}
               />
             </li>
           ) : (''))}
