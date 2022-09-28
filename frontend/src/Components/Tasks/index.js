@@ -37,7 +37,6 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
             }
 
             else if (newDate && newDate !== date) {
-                console.log('entrei data')
                 const duedate = new Date(newDate)
                 const isoDate = duedate.toISOString()
                 await api.post(`/content/${data._id}`, {
@@ -52,6 +51,8 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
                     duedate: data.duedate
                 })
             }
+
+            getAllTasks()
         }
 
 
@@ -83,7 +84,8 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
                 <input
                     className="date"
                     type={"date"}
-                    value={date}
+                    defaultValue={date}
+                    disabled={done}
                     onChange={e => setNewDate(e.target.value)}
                     onBlur={e => handleSave(e.target)}
 
@@ -113,7 +115,8 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
             </div>
             <textarea
                 className="description"
-                value={description}
+                defaultValue={description}
+                disabled={done}
                 onChange={e => setNewDescription(e.target.value)}
                 onBlur={e => handleSave(e.target)}
             />
