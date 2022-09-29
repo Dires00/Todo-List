@@ -10,50 +10,46 @@ import './styles.css'
 import Done from "../Done";
 
 function Tasks({ data, setTrigger, setId, getAllTasks}) {
-    const [newData, setNewData] = useState(data)
-    const [date, setDate] = useState(newData.duedate ? newData.duedate.split('T')[0] : data.duedate.split('T')[0])
-    const [description, setDescription] = useState(newData.description ? newData.description : data.description)
-    const [done, setDone] = useState(newData.description ? newData.done : data.done)
+    const [date, setDate] = useState(data.duedate.split('T')[0])
+    const [description, setDescription] = useState(data.description)
+    const [done, setDone] = useState(data.done)
     const [newDate, setNewDate] = useState('')
     const [newDescription, setNewDescription] = useState('')
 
     useEffect(() => {
-        setNewData(data)
-        setDate(newData.duedate ? newData.duedate.split('T')[0] : data.duedate.split('T')[0])
-        setDescription(newData.description ? newData.description : data.description)
-        setDone(newData.description ? newData.done : data.done)
-    }, [data, newData])
+        setDate(data.duedate.split('T')[0])
+        setDescription(data.description)
+        setDone(data.done)
+    }, [data])
 
-    async function handleSave(e) {
-        if (!data.done) {
-            if (newDate && newDate !== date && newDescription && newDescription !== data.description) {
+    async function handleSave() {
+        console.log('salvando...\n Data: ' + newDate)
+        if (!done) {
+            console.log('date: ' + date)
+
+            if (newDate && newDate !== data.duedate.split('T')[0]) {
+                console.log('atualizei a data')
                 const duedate = new Date(newDate)
                 const isoDate = duedate.toISOString()
-                await api.post(`/content/${data._id}`, {
-                    description: newDescription,
-                    duedate: isoDate
-                })
-
-            }
-
-            else if (newDate && newDate !== date) {
-                const duedate = new Date(newDate)
-                const isoDate = duedate.toISOString()
-                await api.post(`/content/${data._id}`, {
+                const response = await api.post(`/content/${data._id}`, {
                     description: data.description,
                     duedate: isoDate
                 })
+                console.log("responseUpdate: "+ response.data)
             }
 
             else if (newDescription && newDescription !== data.description) {
+                console.log('atualizei a description')
                 await api.post(`/content/${data._id}`, {
                     description: newDescription,
                     duedate: data.duedate
                 })
             }
-
+            setNewDate('')
+            setNewDescription('')
             getAllTasks()
         }
+        
 
 
     }
@@ -62,7 +58,6 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
         if (id) {
             const response = await api.post(`/done/${id}`)
             if (response) {
-                setNewData(response.data)
                 getAllTasks()
             }
         }
@@ -72,7 +67,6 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
         if (id) {
             const response = await api.post(`/hide/${id}`)
             if (response) {
-                setNewData(response.data)
                 getAllTasks()
             }
         }
@@ -84,10 +78,15 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
                 <input
                     className="date"
                     type={"date"}
-                    defaultValue={date}
+                    value={date}
                     disabled={done}
-                    onChange={e => setNewDate(e.target.value)}
-                    onBlur={e => handleSave(e.target)}
+                    onChange={e => {
+                        setNewDate(e.target.value)
+                        setDate(e.target.value)
+                    }}
+                    onBlur={e => {
+                        handleSave(e.target)
+                    }}
 
                 />
 
@@ -96,7 +95,7 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
                         <BiTrash
                             onClick={() => {
                                 setTrigger(true)
-                                setId(newData._id ? newData._id : data._id)
+                                setId(data._id)
                             }}
                         />
                     </div>
@@ -104,7 +103,7 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
                         <MdSdStorage
                             onClick={() => {
                                 if (done) {
-                                    handleHide(newData._id ? newData._id : data._id)
+                                    handleHide(data._id)
                                 } else {
                                     window.alert('A tarefa deve estar finalizada!')
                                 }
@@ -115,16 +114,19 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
             </div>
             <textarea
                 className="description"
-                defaultValue={description}
+                value={description}
                 disabled={done}
-                onChange={e => setNewDescription(e.target.value)}
+                onChange={e => {
+                    setNewDescription(e.target.value)
+                    setDescription(e.target.value)
+                }}
                 onBlur={e => handleSave(e.target)}
             />
             
             <Done done={done}
             handleDone={handleDone}
             setDone={setDone}
-            id={newData._id ? newData._id : data._id}></Done>
+            id={data._id}></Done>
         </>
 
     )

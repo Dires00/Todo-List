@@ -41,9 +41,11 @@ function App() {
       const response = await api.delete(`/todolist/${id}`)
       if (response) {
         //window.location.reload(true)
-        setAllTasks(allTasks.filter(task => task._id !== id))
+        //setAllTasks([{}])
+        getAllTasks()
         setDeleteTrigger(false)
       }
+  
       return response
     }
   }
