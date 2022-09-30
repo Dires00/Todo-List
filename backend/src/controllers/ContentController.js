@@ -27,8 +27,6 @@ module.exports = {
     async read(request, response){
         allTasks = await TodoList.find()
         const description = request.query
-        console.log(description)
-        console.log(allTasks.filter(task => task.description.includes(description.description)))
         const itens = allTasks.filter(task => task.description.includes(description.description))
 
         if(!itens){

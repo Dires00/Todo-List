@@ -23,23 +23,18 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
     }, [data])
 
     async function handleSave() {
-        console.log('salvando...\n Data: ' + newDate)
         if (!done) {
-            console.log('date: ' + date)
 
             if (newDate && newDate !== data.duedate.split('T')[0]) {
-                console.log('atualizei a data')
                 const duedate = new Date(newDate)
                 const isoDate = duedate.toISOString()
                 const response = await api.post(`/content/${data._id}`, {
                     description: data.description,
                     duedate: isoDate
                 })
-                console.log("responseUpdate: "+ response.data)
             }
 
             else if (newDescription && newDescription !== data.description) {
-                console.log('atualizei a description')
                 await api.post(`/content/${data._id}`, {
                     description: newDescription,
                     duedate: data.duedate
@@ -47,6 +42,7 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
             }
             setNewDate('')
             setNewDescription('')
+            getAllTasks()
         }
         
 
