@@ -47,7 +47,6 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
             }
             setNewDate('')
             setNewDescription('')
-            getAllTasks()
         }
         
 

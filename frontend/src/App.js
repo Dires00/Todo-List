@@ -25,7 +25,7 @@ function App() {
   const [allTasks, setAllTasks] = useState([{}])
   const [deleteTrigger, setDeleteTrigger] = useState(false)
   const [deleteId, setId] = useState('')
-  const [search, setSearch] = useState('')
+  
 
   useEffect(() => {
     getAllTasks()
@@ -40,9 +40,7 @@ function App() {
     if (id) {
       const response = await api.delete(`/todolist/${id}`)
       if (response) {
-        //window.location.reload(true)
-        //setAllTasks([{}])
-        getAllTasks()
+        setAllTasks(allTasks.filter(task => task._id !== id))
         setDeleteTrigger(false)
       }
   
@@ -50,7 +48,7 @@ function App() {
     }
   }
 
-  async function handleSearch() {
+  async function handleSearch(search) {
     if (search) {
       const response = await api.get(`/content?description=${search}`)
       if (response) {
@@ -69,21 +67,20 @@ function App() {
         </div>
 
         <div className='search'>
-          <input className='search-input' type='text' placeholder="Pesquisar..." onChange={(e) => setSearch(e.target.value)} />
+          <input className='search-input' 
+          type='text' 
+          placeholder="Pesquisar..." 
+          onChange={(e) => {
+            handleSearch(e.target.value)
+            }} />
           <BiSearchAlt2 className='search-icon' onClick={() => {
-            if (search) {
-              handleSearch()
-            } else {
-              getAllTasks()
-            }
           }}></BiSearchAlt2>
         </div>
 
         <FormGroup className='switch'>
           <FormControlLabel control={<Switch onChange={() => {
             setHide(!hide)
-            if(!search)
-              getAllTasks()
+            
           }}
           />} label="Arquivadas" />
         </FormGroup>

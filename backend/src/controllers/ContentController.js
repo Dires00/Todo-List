@@ -25,8 +25,11 @@ module.exports = {
     },
 
     async read(request, response){
+        allTasks = await TodoList.find()
         const description = request.query
-        const itens = await TodoList.find(description)
+        console.log(description)
+        console.log(allTasks.filter(task => task.description.includes(description.description)))
+        const itens = allTasks.filter(task => task.description.includes(description.description))
 
         if(!itens){
             return response.status(401).json({error: "Registro não encontrado"})
