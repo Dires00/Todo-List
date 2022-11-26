@@ -9,6 +9,7 @@ function Done({ done, setDone, handleDone, id }) {
     const [dn, setDn] = useState(done)
     
     useEffect(() => {
+        console.log('Executei o useEffects')
         setDn(done)
     }, [done, id])
     
@@ -17,6 +18,8 @@ function Done({ done, setDone, handleDone, id }) {
         <span className="done-icon"
             onClick={() => {
                 handleDone(id) 
+                setDn(!done)
+                setDone(!done)
             }}
         >
             <BiCheckDouble className="icon-check" />
@@ -26,6 +29,8 @@ function Done({ done, setDone, handleDone, id }) {
     </>) : (<>
         <span className="done-icon"
             onClick={() => {
+                setDn(!done)
+                setDone(!done)
                 handleDone(id)
             }}
         >

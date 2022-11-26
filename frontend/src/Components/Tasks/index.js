@@ -28,7 +28,7 @@ function Tasks({ data, setTrigger, setId, getAllTasks}) {
             if (newDate && newDate !== data.duedate.split('T')[0]) {
                 const duedate = new Date(newDate)
                 const isoDate = duedate.toISOString()
-                const response = await api.post(`/content/${data._id}`, {
+                await api.post(`/content/${data._id}`, {
                     description: data.description,
                     duedate: isoDate
                 })
